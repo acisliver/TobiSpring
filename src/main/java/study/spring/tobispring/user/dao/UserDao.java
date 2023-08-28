@@ -7,11 +7,7 @@ import java.sql.*;
 public class UserDao {
 
     public void add(User user) throws ClassNotFoundException, SQLException {
-        Class.forName("org.h2.Driver");
-        Connection c = DriverManager.getConnection(
-                "jdbc:h2:tcp://localhost/~/H2DB/tobi;MODE=MYSQL",
-                "sa",
-                "1234");
+        Connection c = getConnection();
 
         PreparedStatement ps = c.prepareStatement("insert into users(id, name, password) values (?, ?, ?)");
         ps.setString(1, user.getId());
@@ -25,11 +21,7 @@ public class UserDao {
     }
 
     public User get(String id) throws ClassNotFoundException, SQLException {
-        Class.forName("org.h2.Driver");
-        Connection c = DriverManager.getConnection(
-                "jdbc:h2:tcp://localhost/~/H2DB/tobi;MODE=MYSQL",
-                "sa",
-                "1234");
+        Connection c = getConnection();
 
         PreparedStatement ps = c.prepareStatement("select * from users where id = ?");
         ps.setString(1, id);
@@ -46,5 +38,15 @@ public class UserDao {
         c.close();
 
         return user;
+    }
+
+
+    private static Connection getConnection() throws ClassNotFoundException, SQLException {
+        Class.forName("org.h2.Driver");
+        Connection c = DriverManager.getConnection(
+                "jdbc:h2:tcp://localhost/~/H2DB/tobi;MODE=MYSQL",
+                "sa",
+                "1234");
+        return c;
     }
 }
