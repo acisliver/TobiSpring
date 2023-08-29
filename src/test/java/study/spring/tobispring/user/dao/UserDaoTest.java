@@ -11,7 +11,7 @@ class UserDaoTest {
 
     @Test
     void test() throws SQLException, ClassNotFoundException {
-        UserDao userDao = new UserDao();
+        UserDao userDao = new NUserDao();
 
         User user = new User();
         user.setId("acisliver");
